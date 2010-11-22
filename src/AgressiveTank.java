@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.util.Random;
 
 import no.conduct.totalconquest.Direction;
@@ -8,11 +7,6 @@ import no.conduct.totalconquest.Tank;
 public class AgressiveTank extends Tank {
 
     public AgressiveTank() {
-    }
-
-    @Override
-    public Color getColor() {
-        return Color.YELLOW;
     }
 
     Random r = new Random();

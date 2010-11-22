@@ -1,7 +1,5 @@
 package no.conduct.totalconquest;
 
-import java.awt.Color;
-
 public abstract class Tank {
 
     private int energy;
@@ -44,8 +42,6 @@ public abstract class Tank {
     }
 
     public abstract void go();
-
-    public abstract Color getColor();
 
     public final int getEnergy() {
         return energy;

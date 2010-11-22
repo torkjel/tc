@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.util.Random;
 
 import no.conduct.totalconquest.Tank;
@@ -7,11 +6,6 @@ import no.conduct.totalconquest.Tank;
 public class StupidTank extends Tank {
 
     public StupidTank() {
-    }
-
-    @Override
-    public Color getColor() {
-        return Color.BLUE;
     }
 
     Random r = new Random();

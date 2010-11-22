@@ -1,32 +1,40 @@
 package no.conduct.totalconquest;
 
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JLabel;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 public class Status extends JPanel {
 
     private Battlefield battlefield;
 
-    private Map<String, JLabel> scoreLabels = new HashMap<String, JLabel>();
+    private Map<String, TeamStatus> teamStatus = new HashMap<String, TeamStatus>();
 
     public Status(Battlefield battlefield) {
         this.battlefield = battlefield;
-        setLayout(new FlowLayout());
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         for (String team : battlefield.getTeams()) {
-            JLabel l = new JLabel(team + ": " + battlefield.getScore(team));
-            add(l);
-            scoreLabels.put(team, l);
+            TeamStatus ts = new TeamStatus(team);
+            add(ts);
+            teamStatus.put(team, ts);
         }
     }
 
     public void update() {
+        setBackground(Color.BLUE);
+        int roundMaxScore = Integer.MIN_VALUE;
         for (String team : battlefield.getTeams()) {
-            JLabel l = scoreLabels.get(team);
-            l.setText(team + ": " + battlefield.getScore(team));
+            int score = battlefield.getScore(team);
+            if (score > roundMaxScore)
+                roundMaxScore = score;
+        }
+
+        for (String team : battlefield.getTeams()) {
+            TeamStatus l = teamStatus.get(team);
+            l.setScore(battlefield.getScore(team), roundMaxScore);
         }
         repaint();
     }

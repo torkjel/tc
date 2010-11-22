@@ -1,18 +1,12 @@
-import java.awt.Color;
 import java.util.Random;
 
 import no.conduct.totalconquest.Direction;
 import no.conduct.totalconquest.Tank;
 
 
-public class GandUpTank extends Tank {
+public class GangUpTank extends Tank {
 
-    public GandUpTank() {
-    }
-
-    @Override
-    public Color getColor() {
-        return Color.RED;
+    public GangUpTank() {
     }
 
     Random r = new Random();

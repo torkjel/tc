@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,11 +9,6 @@ import no.conduct.totalconquest.Tank;
 public class AgressiveDefensiveTank extends Tank {
 
     public AgressiveDefensiveTank() {
-    }
-
-    @Override
-    public Color getColor() {
-        return Color.MAGENTA;
     }
 
     Random r = new Random();

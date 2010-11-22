@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -40,17 +42,27 @@ public class TC extends JFrame implements Callback {
 
         Container root = getContentPane();
         root.setLayout(new BorderLayout());
+
         root.add(new Controls(battlefield), BorderLayout.NORTH);
+
         battlefieldWidget = new BattlefieldWidget(battlefield);
         battlefield.setUpdateCallback(this);
-        root.add(battlefieldWidget, BorderLayout.CENTER);
 
         status = new Status(battlefield);
-        root.add(status, BorderLayout.EAST);
+
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.add(battlefieldWidget);
+        p.add(status);
+
+        root.add(p, BorderLayout.CENTER);
 
         setVisible(true);
-        pack();
+
         setSize(CONFIG.getWindowWidth(), CONFIG.getWindowHeight());
+
+        System.out.println(status.getSize());
+
     }
 
     @Override
@@ -85,7 +97,7 @@ class BattlefieldWidget extends JPanel {
                 g.drawRect(x * cellSize, y * cellSize, cellSize, cellSize);
                 Tank t = battlefield.get(x, y);
                 if (t != null) {
-                    g.setColor(t.getColor());
+                    g.setColor(TC.CONFIG.getColor(t.getTeamName()));
                     g.fillRect(x * cellSize + 1, y * cellSize + 1, cellSize - 2,cellSize - 2);
                 }
             }

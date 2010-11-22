@@ -1,10 +1,20 @@
 package no.conduct.totalconquest;
 
+import java.awt.Color;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 
 public class Config {
+
+    public Iterator<Color> avalableColors =
+        Arrays.asList(Color.RED, Color.BLUE, Color.GREEN, Color.CYAN, Color.MAGENTA).iterator();
+
+    private Map<String, Color> colors = new HashMap<String, Color>();
 
     private Properties properties = new Properties();
     private int teamCount;
@@ -80,6 +90,14 @@ public class Config {
 
     private int getIntProperty(String name) {
         return Integer.parseInt(properties.getProperty(name));
+    }
+
+    public Color getColor(String name) {
+        Color c = colors.get(name);
+        if (c == null)
+            colors.put(name, c = avalableColors.next());
+        return c;
+
     }
 
 }

@@ -81,7 +81,6 @@ public class GangUpTravelingTank extends Tank {
                 if (isWall(prefDir))
                     prefDir = prefDir.getOposite();
                 move(prefDir);
-//                move(Direction.randomOrder().get(0));
             }
         }
     }

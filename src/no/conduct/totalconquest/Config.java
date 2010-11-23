@@ -11,10 +11,12 @@ import java.util.Properties;
 
 public class Config {
 
-    public Iterator<Color> avalableColors =
+    private Iterator<Color> avalableColors =
         Arrays.asList(Color.RED, Color.BLUE, Color.GREEN, Color.CYAN, Color.MAGENTA, Color.ORANGE).iterator();
 
     private Map<String, Color> colors = new HashMap<String, Color>();
+
+    private int speed = 100;
 
     private Properties properties = new Properties();
     private int teamCount;
@@ -56,7 +58,7 @@ public class Config {
     }
 
     public int getWindowWidth() {
-        return getGridWidth() * getCellSize() + 200;
+        return getGridWidth() * getCellSize() + 500;
     }
 
     public int getWindowHeight() {
@@ -98,6 +100,14 @@ public class Config {
             colors.put(name, c = avalableColors.next());
         return c;
 
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
 }

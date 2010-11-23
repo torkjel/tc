@@ -8,7 +8,6 @@ import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,9 +28,7 @@ public class TC extends JFrame implements Callback {
 
     public TC(Battlefield battlefield) {
 
-        for (int n = 0; n < CONFIG.getTeamCount(); n++) {
-            battlefield.addTeam(CONFIG.getTankType(n), CONFIG.getTeamSize());
-        }
+        battlefield.init();
 
         addWindowListener(new WindowAdapter() {
             @Override

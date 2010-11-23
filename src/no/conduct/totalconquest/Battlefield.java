@@ -25,8 +25,40 @@ public class Battlefield {
         this.height = height;
     }
 
+    private void clear() {
+        this.grid = new Tank[width][height];
+        teams.clear();
+        score.clear();
+        tanks.clear();
+    }
+
+    public void init() {
+        clear();
+        for (int n = 0; n < TC.CONFIG.getTeamCount(); n++) {
+            addTeam(TC.CONFIG.getTankType(n), TC.CONFIG.getTeamSize());
+        }
+    }
+
     public void setUpdateCallback(Callback callback) {
         this.callback = callback;
+    }
+
+    public void addTank(Class<? extends Tank> tankType) {
+        int x, y;
+        do {
+            x = random.nextInt(width);
+            y = random.nextInt(height);
+        } while (grid[x][y] != null);
+        Tank tank;
+        try {
+            tank = tankType.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        grid[x][y] = tank;
+        tanks.add(tank);
+        tank.setPosition(x, y);
+        tank.setBattlefield(this);
     }
 
     public void addTeam(Class<? extends Tank> tankType, int count) {
@@ -46,7 +78,6 @@ public class Battlefield {
             score.put(tank.getTeamName(), 0);
             grid[x][y] = tank;
             tanks.add(tank);
-            tank.setId(count);
             tank.setPosition(x, y);
             tank.setBattlefield(this);
         }
@@ -63,6 +94,7 @@ public class Battlefield {
     public void remove(Tank t) {
         tanks.remove(t);
         grid[t.getXPosition()][t.getYPosition()] = null;
+        t.setBattlefield(null);
     }
 
     public int getWidth() {
@@ -100,18 +132,24 @@ public class Battlefield {
             @Override
             public void run() {
                 while (running) {
-                    try { Thread.sleep(300); } catch (InterruptedException e) { }
+                    long time = System.currentTimeMillis();
                     if (paused)
                         continue;
                     for (Tank t : new HashSet<Tank>(tanks)) {
+                        if (t.getEnergy() <= 0)
+                            continue;
                         try {
                             t.go();
                         } catch (Exception e) {
-                            System.err.println(t + " threw exception and must die!");
                             e.printStackTrace();
+                            System.err.println(t + " threw exception and must die!");
                         }
                     }
                     callback.update();
+                    time = System.currentTimeMillis() - time;
+                    if (time < TC.CONFIG.getSpeed()) {
+                        try { Thread.sleep(TC.CONFIG.getSpeed()); } catch (InterruptedException e) { }
+                    }
                 }
             }
 

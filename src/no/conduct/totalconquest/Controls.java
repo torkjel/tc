@@ -3,14 +3,21 @@ package no.conduct.totalconquest;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Controls extends JPanel {
 
-    JButton startPause = new JButton("Start");
+    JButton start = new JButton("Start");
     JButton stop = new JButton("Stop");
+    JLabel speedLabel = new JLabel("Speed:");
+    JTextField speed = new JTextField(5);
 
     private final Battlefield battlefield;
 
@@ -18,28 +25,39 @@ public class Controls extends JPanel {
         this.battlefield = bf;
 
         setLayout(new FlowLayout());
-        add(startPause);
+        add(start);
         add(stop);
+        add(speedLabel);
+        add(speed);
+        speed.setText(TC.CONFIG.getSpeed() + "");
 
-        startPause.addActionListener(new ActionListener() {
+        start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!battlefield.isRunning()) {
+                if (!battlefield.isRunning())
+                    battlefield.init();
                     battlefield.start();
-                    startPause.setText("Pause");
-                } else if (battlefield.isRunning()) {
-                    System.out.println("pause...");
-                    battlefield.pause();
-                    startPause.setText(battlefield.isPaused() ? "Start" : "Pause");
-                }
             }
         });
 
         stop.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                battlefield.stop();
+                if (battlefield.isRunning())
+                    battlefield.stop();
+            }
+        });
+
+        speed.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    try {
+                        TC.CONFIG.setSpeed(Integer.parseInt(speed.getText()));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
         });
 

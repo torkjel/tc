@@ -5,7 +5,6 @@ public abstract class Tank {
     private int energy;
     private Battlefield battlefield;
     private int x, y;
-    private int id;
     private String teamName;
 
     protected Tank() {
@@ -30,14 +29,11 @@ public abstract class Tank {
         return y;
     }
 
-    final void setId(int id) {
-        this.id = id;
-    }
-
     final void hit() {
         energy -= TC.CONFIG.getHitDamage();
         battlefield.decScore(getTeamName());
         if (energy <= 0) {
+            battlefield.addTank(this.getClass());
             battlefield.remove(this);
         }
     }
@@ -121,7 +117,7 @@ public abstract class Tank {
     }
 
     public final String toString() {
-        return "Tank:" + getTeamName() + ":" + id;
+        return "Tank:" + getTeamName();
     }
 
     private int clamp(int value) {

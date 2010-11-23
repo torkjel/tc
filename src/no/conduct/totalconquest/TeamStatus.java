@@ -18,7 +18,7 @@ public class TeamStatus extends JPanel {
     private Color color;
 
     public TeamStatus(String team) {
-        dim = new Dimension(WIDTH + 4, TC.CONFIG.getWindowHeight() - 100);
+        dim = new Dimension(WIDTH, TC.CONFIG.getWindowHeight() - 100);
         setSize(dim);
         setMinimumSize(dim);
         setMaximumSize(dim);
@@ -38,17 +38,17 @@ public class TeamStatus extends JPanel {
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
         setSize(dim);
-        g.setColor(Color.BLACK);
         g.clearRect(0, 0, (int)dim.getWidth(), (int)dim.getHeight());
-        g.fillRect(2, 0, (int)dim.getWidth() - 2, (int)dim.getHeight());
+        g.setColor(Color.BLACK);
+        g.fillRect(2, 0, (int)dim.getWidth() - 4, (int)dim.getHeight());
         double h2 = dim.getHeight() / 2.0;
         int h = (int)(score * h2 / scale);
         g.setColor(color);
-        System.out.println(h2 + " " + h);
         if (h > 0)
-            g.fillRect(2, (int)(h2 - h), (int)dim.getWidth(), (int)h);
-        else
-            g.fillRect(2, (int)(h + h2), (int)dim.getWidth(), (int)h2);
+            g.fillRect(2, (int)(h2 - h), (int)dim.getWidth() - 4, h);
+        else {
+            g.fillRect(2, (int)(h2), (int)dim.getWidth() - 4, -h);
+        }
         g.setColor(Color.WHITE);
         g.setXORMode(Color.BLACK);
         g.setFont(getFont().deriveFont(Font.BOLD));

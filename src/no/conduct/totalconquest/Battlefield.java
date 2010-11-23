@@ -1,6 +1,8 @@
 package no.conduct.totalconquest;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -9,6 +11,7 @@ public class Battlefield {
     private Tank[][] grid;
     private int width, height;
     private Set<String> teams = new HashSet<String>();
+    private Map<String, Integer> score = new HashMap<String, Integer>();
 
     private Callback callback;
 
@@ -40,6 +43,7 @@ public class Battlefield {
                 throw new RuntimeException(e);
             }
             teams.add(tank.getTeamName());
+            score.put(tank.getTeamName(), 0);
             grid[x][y] = tank;
             tanks.add(tank);
             tank.setId(count);
@@ -73,14 +77,16 @@ public class Battlefield {
         return teams;
     }
 
+    public void decScore(String team) {
+        score.put(team, score.get(team) - 1);
+    }
+
+    public void incScore(String team) {
+        score.put(team, score.get(team) + 1);
+    }
+
     public int getScore(String team) {
-        int score = 0;
-        for (Tank t : tanks) {
-            if (t.getTeamName().equals(team)) {
-                score += t.getEnergy();
-            }
-        }
-        return score;
+        return score.get(team);
     }
 
     private Thread t;

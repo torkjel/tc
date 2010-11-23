@@ -12,7 +12,7 @@ import java.util.Properties;
 public class Config {
 
     public Iterator<Color> avalableColors =
-        Arrays.asList(Color.RED, Color.BLUE, Color.GREEN, Color.CYAN, Color.MAGENTA).iterator();
+        Arrays.asList(Color.RED, Color.BLUE, Color.GREEN, Color.CYAN, Color.MAGENTA, Color.ORANGE).iterator();
 
     private Map<String, Color> colors = new HashMap<String, Color>();
 

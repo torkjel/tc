@@ -27,7 +27,7 @@ public class Status extends JPanel {
         setBackground(Color.BLUE);
         int roundMaxScore = Integer.MIN_VALUE;
         for (String team : battlefield.getTeams()) {
-            int score = battlefield.getScore(team);
+            int score = Math.abs(battlefield.getScore(team));
             if (score > roundMaxScore)
                 roundMaxScore = score;
         }

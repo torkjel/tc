@@ -61,8 +61,6 @@ public class TC extends JFrame implements Callback {
 
         setSize(CONFIG.getWindowWidth(), CONFIG.getWindowHeight());
 
-        System.out.println(status.getSize());
-
     }
 
     @Override

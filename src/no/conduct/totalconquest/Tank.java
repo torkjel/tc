@@ -36,6 +36,7 @@ public abstract class Tank {
 
     final void hit() {
         energy -= TC.CONFIG.getHitDamage();
+        battlefield.decScore(getTeamName());
         if (energy <= 0) {
             battlefield.remove(this);
         }
@@ -83,8 +84,10 @@ public abstract class Tank {
         int sy = y + upDown;
         if (sx >= 0 && sx < battlefield.getWidth() && sy >= 0 && sy < battlefield.getHeight()) {
             Tank enemy = battlefield.get(sx, sy);
-            if (enemy != null)
+            if (enemy != null) {
                 enemy.hit();
+                battlefield.incScore(getTeamName());
+            }
         }
     }
 
@@ -93,7 +96,6 @@ public abstract class Tank {
     }
 
     public final boolean move(int leftRight, int upDown) {
-        energy--;
         leftRight = clamp(leftRight);
         upDown = clamp(upDown);
         int sx = x + leftRight;

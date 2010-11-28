@@ -37,9 +37,9 @@ public class Config {
     public Config(String ... classNames) {
         this();
         for (String team : classNames) {
-            Class<? extends Tank> teamType;
+            Class<? extends TankBase> teamType;
             try {
-                teamType = (Class<Tank>)getClass().getClassLoader().loadClass(team);
+                teamType = (Class<TankBase>)getClass().getClassLoader().loadClass(team);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -53,8 +53,8 @@ public class Config {
     }
 
     @SuppressWarnings("unchecked")
-    public Class<Tank> getTankType(int teamNumber) {
-        return (Class<Tank>)properties.get("team." + teamNumber + ",tanktype");
+    public Class<TankBase> getTankType(int teamNumber) {
+        return (Class<TankBase>)properties.get("team." + teamNumber + ",tanktype");
     }
 
     public int getWindowWidth() {

@@ -1,13 +1,13 @@
 package no.conduct.totalconquest;
 
-public abstract class Tank {
+abstract class TankBase {
 
     private int energy;
     private Battlefield battlefield;
     private int x, y;
     private String teamName;
 
-    protected Tank() {
+    protected TankBase() {
         energy = TC.CONFIG.getTankEnergy();
         this.teamName = getClass().getSimpleName();
     }
@@ -29,15 +29,6 @@ public abstract class Tank {
         return y;
     }
 
-    final void hit() {
-        energy -= TC.CONFIG.getHitDamage();
-        battlefield.decScore(getTeamName());
-        if (energy <= 0) {
-            battlefield.addTank(this.getClass());
-            battlefield.remove(this);
-        }
-    }
-
     public abstract void go();
 
     public final int getEnergy() {
@@ -48,23 +39,25 @@ public abstract class Tank {
         return teamName;
     }
 
-    public final String sense(Direction direction) {
+    public final Sample sense(Direction direction) {
         return sense(direction.getX(), direction.getY());
     }
 
-    public final String sense(int leftRight, int upDown) {
+    public final Sample sense(int leftRight, int upDown) {
         leftRight = clamp(leftRight);
         upDown = clamp(upDown);
         int sx = x + leftRight;
         int sy = y + upDown;
         if (sx < 0 || sx >= battlefield.getWidth() || sy < 0 || sy >= battlefield.getHeight())
-            return "EDGE";
+            return Sample.WALL;
         else {
-            Tank tank = battlefield.get(sx, sy);
+            TankBase tank = battlefield.get(sx, sy);
             if (tank == null)
-                return null;
+                return Sample.FREE;
             else
-                return tank.getTeamName();
+                return tank.getTeamName().equals(getTeamName())
+                    ? Sample.FRIEND
+                    : Sample.FOE;
         }
     }
 
@@ -79,11 +72,20 @@ public abstract class Tank {
         int sx = x + leftRight;
         int sy = y + upDown;
         if (sx >= 0 && sx < battlefield.getWidth() && sy >= 0 && sy < battlefield.getHeight()) {
-            Tank enemy = battlefield.get(sx, sy);
+            TankBase enemy = battlefield.get(sx, sy);
             if (enemy != null) {
-                enemy.hit();
+                enemy.receiveHit();
                 battlefield.incScore(getTeamName());
             }
+        }
+    }
+
+    private void receiveHit() {
+        energy -= TC.CONFIG.getHitDamage();
+        battlefield.decScore(getTeamName());
+        if (energy <= 0) {
+            battlefield.addTank(this.getClass());
+            battlefield.remove(this);
         }
     }
 

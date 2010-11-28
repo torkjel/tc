@@ -1,22 +1,18 @@
-import java.util.Random;
-
+import no.conduct.totalconquest.AbstractTank;
 import no.conduct.totalconquest.Direction;
-import no.conduct.totalconquest.Tank;
 
 
-public class AgressiveTank extends Tank {
+public class AgressiveTank extends AbstractTank {
 
     public AgressiveTank() {
     }
 
-    Random r = new Random();
     Direction lastObserved;
 
     @Override
     public void go() {
         for (Direction dir : Direction.values()) {
-            String sample = sense(dir);
-            if (sample != null && !"EDGE".equals(sample) && !getTeamName().equals(sample)) {
+            if (isFoe(dir)) {
                 lastObserved = dir;
                 hit(dir);
                 return;
@@ -27,7 +23,7 @@ public class AgressiveTank extends Tank {
             lastObserved = null;
         }
         else
-            move(r.nextInt(3) - 1, r.nextInt(3) - 1);
+            move(Direction.any());
     }
 
 }

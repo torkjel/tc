@@ -1,9 +1,9 @@
 import java.util.Random;
 
-import no.conduct.totalconquest.Tank;
+import no.conduct.totalconquest.AbstractTank;
+import no.conduct.totalconquest.Direction;
 
-
-public class StupidTank extends Tank {
+public class StupidTank extends AbstractTank {
 
     public StupidTank() {
     }
@@ -12,7 +12,11 @@ public class StupidTank extends Tank {
 
     @Override
     public void go() {
-        move(r.nextInt(3) - 1, r.nextInt(3) - 1);
+        Direction dir = Direction.any();
+        if (isFoe(dir))
+            hit(dir);
+        else
+            move(dir);
     }
 
 }

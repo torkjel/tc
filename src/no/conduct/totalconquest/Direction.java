@@ -16,6 +16,8 @@ public enum Direction {
     W (-1,  0),
     NW(-1, -1);
 
+    private static Random RANDOM = new Random();
+
     private int dx, dy;
     private List<Direction> adjacent = new ArrayList<Direction>();
     private List<Direction> perpendicular = new ArrayList<Direction>();
@@ -86,6 +88,14 @@ public enum Direction {
 
     }
 
+    public static List<Direction> valuesList() {
+        return new ArrayList<Direction>(Arrays.asList(values()));
+    }
+
+    public static Direction any() {
+        return anyOf(valuesList());
+    }
+
     public static List<Direction> randomOrder() {
         List<Direction> ordered = new ArrayList<Direction>();
         for (Direction d : values())
@@ -93,11 +103,25 @@ public enum Direction {
         return randomize(ordered);
     }
 
+    public static Direction anyOf(List<Direction> directions) {
+        if (directions != null && directions.size() > 0)
+            return directions.get(RANDOM.nextInt(directions.size()));
+        else
+            return null;
+    }
+
+    private void setPerpendicular(Direction ... perpendicular) {
+        this.perpendicular = Arrays.asList(perpendicular);
+    }
+
+    public List<Direction> getPerpendicular() {
+        return perpendicular;
+    }
+
     private static List<Direction> randomize(List<Direction> ordered) {
         List<Direction> randomized = new ArrayList<Direction>();
-        Random r = new Random();
         while (ordered.size() > 0) {
-            int index = r.nextInt(ordered.size());
+            int index = RANDOM.nextInt(ordered.size());
             Direction d = ordered.get(index);
             ordered.remove(index);
             randomized.add(d);
@@ -105,11 +129,4 @@ public enum Direction {
         return randomized;
     }
 
-    public void setPerpendicular(Direction ... perpendicular) {
-        this.perpendicular = Arrays.asList(perpendicular);
-    }
-
-    public List<Direction> getPerpendicular() {
-        return perpendicular;
-    }
 }

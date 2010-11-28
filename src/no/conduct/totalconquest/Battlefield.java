@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Battlefield {
 
-    private Tank[][] grid;
+    private TankBase[][] grid;
     private int width, height;
     private Set<String> teams = new HashSet<String>();
     private Map<String, Integer> score = new HashMap<String, Integer>();
@@ -17,16 +17,16 @@ public class Battlefield {
 
     private Random random = new Random(314);
 
-    private Set<Tank> tanks = new HashSet<Tank>();
+    private Set<TankBase> tanks = new HashSet<TankBase>();
 
     public Battlefield(int width, int height) {
-        this.grid = new Tank[width][height];
+        this.grid = new TankBase[width][height];
         this.width = width;
         this.height = height;
     }
 
     private void clear() {
-        this.grid = new Tank[width][height];
+        this.grid = new TankBase[width][height];
         teams.clear();
         score.clear();
         tanks.clear();
@@ -43,13 +43,13 @@ public class Battlefield {
         this.callback = callback;
     }
 
-    public void addTank(Class<? extends Tank> tankType) {
+    public void addTank(Class<? extends TankBase> tankType) {
         int x, y;
         do {
             x = random.nextInt(width);
             y = random.nextInt(height);
         } while (grid[x][y] != null);
-        Tank tank;
+        TankBase tank;
         try {
             tank = tankType.newInstance();
         } catch (Exception e) {
@@ -61,14 +61,14 @@ public class Battlefield {
         tank.setBattlefield(this);
     }
 
-    public void addTeam(Class<? extends Tank> tankType, int count) {
+    public void addTeam(Class<? extends TankBase> tankType, int count) {
         while (count --> 0) {
             int x, y;
             do {
                 x = random.nextInt(width);
                 y = random.nextInt(height);
             } while (grid[x][y] != null);
-            Tank tank;
+            TankBase tank;
             try {
                 tank = tankType.newInstance();
             } catch (Exception e) {
@@ -83,15 +83,15 @@ public class Battlefield {
         }
     }
 
-    public Tank get(int x, int y) {
+    public TankBase get(int x, int y) {
         return grid[x][y];
     }
 
-    public Tank set(Tank tank, int x, int y) {
+    public TankBase set(TankBase tank, int x, int y) {
         return grid[x][y] = tank;
     }
 
-    public void remove(Tank t) {
+    public void remove(TankBase t) {
         tanks.remove(t);
         grid[t.getXPosition()][t.getYPosition()] = null;
         t.setBattlefield(null);
@@ -135,7 +135,7 @@ public class Battlefield {
                     long time = System.currentTimeMillis();
                     if (paused)
                         continue;
-                    for (Tank t : new HashSet<Tank>(tanks)) {
+                    for (TankBase t : new HashSet<TankBase>(tanks)) {
                         if (t.getEnergy() <= 0)
                             continue;
                         try {

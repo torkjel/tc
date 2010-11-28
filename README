@@ -1,0 +1,67 @@
+
+Story:
+------
+
+Total krig har brutt ut i det lille to-dimensjonale universet Conductia! Stridende klaner kaster
+sine krigsmaskiner ut i massive slag, men etter flere års strid har ingen av partene stått fram
+som en klar vinner.
+
+Conductianerne har derfor henvendt seg til et lite knippe jordiske konsulenter for å få hjelp. (Det
+er oss!)
+
+Heldigvis har Conductianerne høy respekt for liv, så krigen utkjempes utelukkende av
+pre-programmerte autonome stridsvogner. Det er ditt lags oppgave å lage et kløktig styringsprogram
+for disse, og dermed drukne dine motstanderes stridsvogner i et hav av ild!
+
+Hver stridend part stiller med samme antall og type krigsmaskiner, så det er utelukkende dine
+ferdigheter i strategi og programmering som avgjør konflikten.
+
+Hva nå?
+-------
+
+Conductia består av et to-dimensjonalt spilleprett på 50x50 ruter hvor slaget utkjempes. På dette
+brettet vil hvert lag til en hver tid ha 60 stridsvogner, hvor alle lag er styrt av det
+samme styringsprogrammet. Som i sjakk spilles spillet i runder, hvor hver stridsvogn kan gjøre ett
+trekk i hver runde.
+
+Styringsprogrammet vil i hovedsak bestå av en metode som implementerer ett trek.
+
+Hver stridsvogn har følgende egenskaper:
+- Den kan bare se rutene som direkte grenser til den ruten den står i.
+- Det er bare mulig å flytte til en rute, eller slå mot en fiende som står i en rute, som er synlig.
+- I hver runde kan den slå eller flytte en og bare en gang.
+- En stridsvogn-instans kan ha state (instansvariabler), slik at den kan huske informasjon
+mellom runder.
+- En tanks starter med 10 energi-poeng, og mister et poeng hver gang den blir slått. Når den har 0
+poeng er den død. Døde tanks erstattes umiddelbart av en ny, tilfeldig plassert på brettet, slik at
+antallet tanks på hvert lag  er det samme til enhver tid.
+
+Poengberegning og rangering:
+Hver tank får ett poeng når den slår en annen, og mister ett når den blir slått. Lagets
+totale poengsum regnes dermed differansen mellom antall slag utdelt og antall slag mottatt gjennom
+spillest gang.
+En vinner kåres ved å kjøre spillet til det ikke lenger er spennende, eller så lenge vi har tid til.
+
+Det er ikke lov å:
+- kommunisere mellom stridsvogner ved hjelp av statiske variable, thread-local variabler,
+meldingskøer, ESB'er eller ligende.
+- bruke refleksjon, eller andre lure triks.
+- gjøre noe som helst som motstanderne dine kanskje vil mene er juks.
+
+Steg-for-rsteg:
+-------------
+
+1: Pakk ut tc.zip og les denne filen. (Duh!)
+2: Importer TotalConquest som et prosjekt i Eclipse. Brukere av andre IDE'er kan ha det så godt.
+3: Rename TemplateTank-klassen til noe annet og implementer metoden go()
+4: Kjør
+
+API:
+----
+
+Sjekk føgende klasser:
+- no.conduct.totalconquest.TankBase
+- no.conduct.totalconquest.AbstractTank
+- no.conduct.totalconquest.Status
+- no.conduct.totalconquest.Direction
+Eksempelkode finnes i *Tank.java i default-pakken.

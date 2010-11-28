@@ -1,7 +1,9 @@
 import no.conduct.totalconquest.AbstractTank;
 import no.conduct.totalconquest.Direction;
 
-
+/**
+ * Tank som angriper alle fiender den ser, og prøver å følge etter fiender som stikker av.
+ */
 public class AgressiveTank extends AbstractTank {
 
     public AgressiveTank() {

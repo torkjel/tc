@@ -1,8 +1,9 @@
 package no.conduct.totalconquest;
 
 import java.awt.Color;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,14 +23,14 @@ public class Config {
     private int teamCount;
 
     public Config() {
-        FileReader fr = null;
+        Reader fr = null;
         try {
-            fr = new FileReader("tc.properties");
+            fr = new InputStreamReader(getClass().getResource("/tc.properties").openStream());
             properties.load(fr);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            try { fr.close(); } catch (IOException e) { e.printStackTrace(); }
+            try { if (fr != null) fr.close(); } catch (IOException e) { e.printStackTrace(); }
         }
     }
 

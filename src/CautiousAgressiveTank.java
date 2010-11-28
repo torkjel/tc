@@ -2,9 +2,17 @@
 import no.conduct.totalconquest.AbstractTank;
 import no.conduct.totalconquest.Direction;
 
-public class AgressiveDefensiveTank extends AbstractTank {
+/**
+ * Tank med følgende stratgi:
+ * <ul>
+ * <li> Dersom den ser en enkelt fiende, angrip den.
+ * <li> Dersom den ser mer enn en fiende, flykt.
+ * <li> Dersom ingen fiende er synlig, gå dit hvor vi sist så en fiende.
+ * </ul>
+ */
+public class CautiousAgressiveTank extends AbstractTank {
 
-    public AgressiveDefensiveTank() {
+    public CautiousAgressiveTank() {
     }
 
     Direction lastObserved;

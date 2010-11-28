@@ -30,20 +30,39 @@ abstract class TankBase {
         return y;
     }
 
+    /**
+     * Denne skal du implementere :)
+     */
     public abstract void go();
 
+    /**
+     * Hent gjennstående energi for denne tanken.
+     * En tank starter med 10 og dør når den har 0 i energi. Hver gang en tank blir slått mister
+     * den et energi-poeng.
+     * @return
+     */
     public final int getEnergy() {
         return energy;
     }
 
+    /**
+     * Hent navnet til denne tankens lag. Matcher klassenavnet til styringsprogrammet.
+     * @return
+     */
     public final String getTeamName() {
         return teamName;
     }
 
+    /**
+     * Se hva som befinner seg i den gitte retningen
+     */
     public final Sample sense(Direction direction) {
         return sense(direction.getX(), direction.getY());
     }
 
+    /**
+     * Se hva som befinner seg i den gitte retningen
+     */
     public final Sample sense(int leftRight, int upDown) {
         leftRight = clamp(leftRight);
         upDown = clamp(upDown);
@@ -62,10 +81,16 @@ abstract class TankBase {
         }
     }
 
+    /**
+     * Slå i den gitte retningen
+     */
     public final void hit(Direction dir) {
         hit(dir.getX(), dir.getY());
     }
 
+    /**
+     * Slå i den gitte retningen
+     */
     public final void hit(int leftRight, int upDown) {
         validateMove();
         leftRight = clamp(leftRight);
@@ -90,10 +115,16 @@ abstract class TankBase {
         }
     }
 
+    /**
+     * Flytt i den gitte retningen
+     */
     public final boolean move(Direction direction) {
         return move(direction.getX(), direction.getY());
     }
 
+    /**
+     * Flytt i den gitte retningen
+     */
     public final boolean move(int leftRight, int upDown) {
         validateMove();
         leftRight = clamp(leftRight);
@@ -129,15 +160,15 @@ abstract class TankBase {
             receiveHit();
     }
 
+    final void newRound() {
+        hasMoved = false;
+    }
+
     private void validateMove() {
         if (hasMoved) {
             throw new RuntimeException("This tank '" + this + "' has laready moved this round");
         }
         hasMoved = true;
-    }
-
-    final void newRound() {
-        hasMoved = false;
     }
 
     private int clamp(int value) {

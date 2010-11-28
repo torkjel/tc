@@ -133,8 +133,10 @@ public class Battlefield {
             public void run() {
                 while (running) {
                     long time = System.currentTimeMillis();
-                    if (paused)
+                    if (paused) {
+                        delay(10);
                         continue;
+                    }
                     for (TankBase t : new HashSet<TankBase>(tanks)) {
                         if (t.getEnergy() <= 0)
                             continue;
@@ -148,15 +150,19 @@ public class Battlefield {
                         }
                     }
                     callback.update();
-                    time = System.currentTimeMillis() - time;
-                    if (time < TC.CONFIG.getSpeed()) {
-                        try { Thread.sleep(TC.CONFIG.getSpeed()); } catch (InterruptedException e) { }
+                    time = TC.CONFIG.getSpeed() - (System.currentTimeMillis() - time);
+                    if (time > 0) {
+                        try { Thread.sleep(time); } catch (InterruptedException e) { }
                     }
                 }
             }
 
         });
         t.start();
+    }
+
+    private void delay(long delay) {
+        try { Thread.sleep(delay); } catch (InterruptedException e) { }
     }
 
     public void pause() {

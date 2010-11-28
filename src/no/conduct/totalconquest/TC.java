@@ -17,7 +17,7 @@ public class TC extends JFrame implements Callback {
     public static Config CONFIG;
 
     public static void main(String[] args) {
-        Direction.initAdjacent();
+        Direction.initDirections();
         CONFIG = new Config(args);
         Battlefield battlefield = new Battlefield(CONFIG.getGridWidth(), CONFIG.getGridHeight());
         new TC(battlefield);

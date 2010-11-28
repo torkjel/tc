@@ -7,43 +7,77 @@ import java.util.List;
 
 public abstract class AbstractTank extends TankBase {
 
-    public List<Direction> getEnemyPositions() {
+    /**
+     * Hent posisjonen til alle synlige fiender
+     * @return
+     */
+    public final List<Direction> getEnemyPositions() {
         return getAll(FOE);
     }
 
-    public List<Direction> getFriendPositions() {
+    /**
+     * Hent posisjonen til alle synlige venner
+     * @return
+     */
+    public final List<Direction> getFriendPositions() {
         return getAll(FRIEND);
     }
 
-    public Direction getFriendPosition() {
+    /**
+     * Hent posisjonen til en tilfeldig synlig venn, eller <code>null</code> dersom du er alene.
+     * @return
+     */
+    public final Direction getFriendPosition() {
         return Direction.anyOf(getFriendPositions());
     }
 
-    public Direction getEnemyPosition() {
+    /**
+     * Hent posisjonen til en tilfeldig synlig fiende, eller <code>null</code>.
+     * @return
+     */
+    public final Direction getEnemyPosition() {
         return Direction.anyOf(getEnemyPositions());
     }
 
-    public boolean isWithFriends() {
+    /**
+     * Er noen venner synlige?
+     */
+    public final boolean isWithFriends() {
         return getFriendPosition() != null;
     }
 
-    public boolean isInFight() {
+    /**
+     * Er noen fiender synlige?
+     */
+    public final boolean isInFight() {
         return getEnemyPosition() != null;
     }
 
-    public boolean isFriend(Direction dir) {
+    /**
+     * Kan du se en venn i denne retningen?
+     */
+    public final boolean isFriend(Direction dir) {
         return sense(dir) == FRIEND;
     }
 
-    public boolean isFoe(Direction dir) {
+    /**
+     * Kan du se en fiende i denne retningen?
+     */
+    public final boolean isFoe(Direction dir) {
         return sense(dir) == FOE;
     }
 
-    public boolean isFree(Direction dir) {
+    /**
+     * Er ruten i denne retningen ledig?
+     */
+    public final boolean isFree(Direction dir) {
         return sense(dir) == FREE;
     }
 
-    public boolean isWall(Direction dir) {
+    /**
+     * Inneholder ruten i denne retningen en vegg?
+     */
+    public final boolean isWall(Direction dir) {
         return sense(dir) == WALL;
     }
 

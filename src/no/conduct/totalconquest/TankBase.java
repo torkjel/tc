@@ -6,6 +6,7 @@ abstract class TankBase {
     private Battlefield battlefield;
     private int x, y;
     private String teamName;
+    private boolean hasMoved = false;
 
     protected TankBase() {
         energy = TC.CONFIG.getTankEnergy();
@@ -65,8 +66,8 @@ abstract class TankBase {
         hit(dir.getX(), dir.getY());
     }
 
-
     public final void hit(int leftRight, int upDown) {
+        validateMove();
         leftRight = clamp(leftRight);
         upDown = clamp(upDown);
         int sx = x + leftRight;
@@ -94,6 +95,7 @@ abstract class TankBase {
     }
 
     public final boolean move(int leftRight, int upDown) {
+        validateMove();
         leftRight = clamp(leftRight);
         upDown = clamp(upDown);
         int sx = x + leftRight;
@@ -119,7 +121,23 @@ abstract class TankBase {
     }
 
     public final String toString() {
-        return "Tank:" + getTeamName();
+        return "Tank:" + getTeamName() + ":" + super.toString();
+    }
+
+    final void die() {
+        while (energy > 0)
+            receiveHit();
+    }
+
+    private void validateMove() {
+        if (hasMoved) {
+            throw new RuntimeException("This tank '" + this + "' has laready moved this round");
+        }
+        hasMoved = true;
+    }
+
+    final void newRound() {
+        hasMoved = false;
     }
 
     private int clamp(int value) {

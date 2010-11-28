@@ -139,10 +139,12 @@ public class Battlefield {
                         if (t.getEnergy() <= 0)
                             continue;
                         try {
+                            t.newRound();
                             t.go();
                         } catch (Exception e) {
                             e.printStackTrace();
                             System.err.println(t + " threw exception and must die!");
+                            t.die();
                         }
                     }
                     callback.update();

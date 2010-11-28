@@ -26,13 +26,14 @@ public class TC extends JFrame implements Callback {
     private final BattlefieldWidget battlefieldWidget;
     private final Status status;
 
-    public TC(Battlefield battlefield) {
+    public TC(final Battlefield battlefield) {
 
         battlefield.init();
 
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                battlefield.stop();
                 TC.this.dispose();
             }
         });

@@ -94,7 +94,7 @@ class BattlefieldWidget extends JPanel {
                 TankBase t = battlefield.get(x, y);
                 if (t != null) {
                     g.setColor(TC.CONFIG.getColor(t.getTeamName()));
-                    g.fillRect(x * cellSize + 1, y * cellSize + 1, cellSize - 2,cellSize - 2);
+                    g.fillRect(x * cellSize + 1, y * cellSize + 1, cellSize - 1,cellSize - 1);
                 }
             }
         }

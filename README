@@ -60,8 +60,7 @@ API:
 ----
 
 Sjekk føgende klasser:
-- no.conduct.totalconquest.TankBase
 - no.conduct.totalconquest.AbstractTank
-- no.conduct.totalconquest.Status
+- no.conduct.totalconquest.Sample
 - no.conduct.totalconquest.Direction
 Eksempelkode finnes i *Tank.java i default-pakken.

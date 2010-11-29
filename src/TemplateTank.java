@@ -5,7 +5,7 @@ import static no.conduct.totalconquest.Sample.*;
 
 /**
  * Startpunkt.
- * TODO: RenameKall om klassen til noe unikt før du sender den inn!
+ * TODO: Kall om klassen til noe unikt for ditt lag.
  */
 public class TemplateTank extends AbstractTank {
 

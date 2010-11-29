@@ -41,7 +41,7 @@ abstract class TankBase {
      * den et energi-poeng.
      * @return
      */
-    public final int getEnergy() {
+    final int getEnergy() {
         return energy;
     }
 
@@ -49,21 +49,14 @@ abstract class TankBase {
      * Hent navnet til denne tankens lag. Matcher klassenavnet til styringsprogrammet.
      * @return
      */
-    public final String getTeamName() {
+    final String getTeamName() {
         return teamName;
     }
 
     /**
      * Se hva som befinner seg i den gitte retningen
      */
-    public final Sample sense(Direction direction) {
-        return sense(direction.getX(), direction.getY());
-    }
-
-    /**
-     * Se hva som befinner seg i den gitte retningen
-     */
-    public final Sample sense(int leftRight, int upDown) {
+    final Sample sense(int leftRight, int upDown) {
         leftRight = clamp(leftRight);
         upDown = clamp(upDown);
         int sx = x + leftRight;
@@ -84,14 +77,7 @@ abstract class TankBase {
     /**
      * Slå i den gitte retningen
      */
-    public final void hit(Direction dir) {
-        hit(dir.getX(), dir.getY());
-    }
-
-    /**
-     * Slå i den gitte retningen
-     */
-    public final void hit(int leftRight, int upDown) {
+    final void hit(int leftRight, int upDown) {
         validateMove();
         leftRight = clamp(leftRight);
         upDown = clamp(upDown);
@@ -118,14 +104,7 @@ abstract class TankBase {
     /**
      * Flytt i den gitte retningen
      */
-    public final boolean move(Direction direction) {
-        return move(direction.getX(), direction.getY());
-    }
-
-    /**
-     * Flytt i den gitte retningen
-     */
-    public final boolean move(int leftRight, int upDown) {
+    final boolean move(int leftRight, int upDown) {
         validateMove();
         leftRight = clamp(leftRight);
         upDown = clamp(upDown);

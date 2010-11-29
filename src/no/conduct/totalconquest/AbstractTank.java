@@ -8,6 +8,27 @@ import java.util.List;
 public abstract class AbstractTank extends TankBase {
 
     /**
+     * Se hva som befinner seg i den gitte retningen
+     */
+    public final Sample sense(Direction direction) {
+        return sense(direction.getX(), direction.getY());
+    }
+
+    /**
+     * Slå i den gitte retningen
+     */
+    public final void hit(Direction dir) {
+        hit(dir.getX(), dir.getY());
+    }
+
+    /**
+     * Flytt i den gitte retningen
+     */
+    public final boolean move(Direction direction) {
+        return move(direction.getX(), direction.getY());
+    }
+
+    /**
      * Hent posisjonen til alle synlige fiender
      * @return
      */
@@ -89,4 +110,5 @@ public abstract class AbstractTank extends TankBase {
         return list;
     }
 
+    public abstract void go();
 }
